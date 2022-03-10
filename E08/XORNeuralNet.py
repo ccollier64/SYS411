@@ -7,7 +7,6 @@ expectedOutputs =   [
                         [0, 1, 1, 0, "True"], 
                         [0, 0, 0, 1, "False"]
                     ]
-# [[[1,1],[0,1]],[[1,1],[0,1]]]
 
 lrate           =  1
 
@@ -29,7 +28,7 @@ def sigmoidFunction(value):
 	return 1 / (1 + np.exp(-value))
 
 def feedForwardFunc(weight1, weight2, input1, input2, bias):
-    net_input = (weight1*input1)+(weight2*input2)*bias
+    net_input = (weight1*input1)+(weight2*input2)+bias
     return sigmoidFunction(net_input)
 
 def outputErrdrvFunc(value, expected):
@@ -40,7 +39,7 @@ def hiddenErrdrvFunc(value, trueErrdrv, falseErrdrv, weight1, weight2):
 def biasAdjustment(curBias, errdrv):
     return curBias + errdrv
 def weightAdjustment(curWeight, nodeValue, outputErrdrv):
-    return curWeight + outputErrdrv * nodeValue
+    return curWeight + (lrate * outputErrdrv) * nodeValue
 
 for epoch in range(1,5001):
     print("EPOCH: %d" %(epoch))
